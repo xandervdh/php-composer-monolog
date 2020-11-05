@@ -22,19 +22,39 @@ $logger->pushHandler(new BrowserConsoleHandler);
 
 // You can now use your logger
 switch ($type){
-    case 'INFO' || 'DEBUG' || 'NOTICE':
+    case 'INFO':
         $logger->pushHandler(new StreamHandler(__DIR__.'/log/info.log', Logger::INFO));
-        //$logger->info($message);
+        $logger->info($message);
         break;
-    case 'WARNING' || 'ERROR' || 'CRITICAL' || 'ALERT':
+    case 'DEBUG':
+        $logger->pushHandler(new StreamHandler(__DIR__.'/log/info.log', Logger::DEBUG));
+        $logger->debug($message);
+        break;
+    case 'NOTICE':
+        $logger->pushHandler(new StreamHandler(__DIR__.'/log/info.log', Logger::NOTICE));
+        $logger->notice($message);
+        break;
+    case 'WARNING':
         $logger->pushHandler(new StreamHandler(__DIR__.'/log/warning.log', Logger::WARNING));
-        //$logger->warning($message);
+        $logger->warning($message);
+        break;
+    case 'ALERT':
+        $logger->pushHandler(new StreamHandler(__DIR__.'/log/warning.log', Logger::ALERT));
+        $logger->alert($message);
+        break;
+    case 'ERROR':
+        $logger->pushHandler(new StreamHandler(__DIR__.'/log/warning.log', Logger::ERROR));
+        $logger->error($message);
+        break;
+    case 'CRITICAL':
+        $logger->pushHandler(new StreamHandler(__DIR__.'/log/warning.log', Logger::CRITICAL));
+        $logger->critical($message);
         break;
     case 'EMERGENCY':
         $logger->pushHandler(new StreamHandler(__DIR__.'/log/emergency.log', Logger::EMERGENCY));
-        //$logger->emergency($message);
+        $logger->emergency($message);
         break;
 }
-$logger->$type($message);
+
 
 require_once 'buttons.html';
