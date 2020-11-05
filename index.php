@@ -15,18 +15,19 @@ $type = $_GET['type'];
 $message = $_GET['message'];
 // Create the logger
 $logger = new Logger('my_logger');
+$console = new Logger('console');
 
 // Now add some handlers
 
-$logger->pushHandler(new NativeMailerHandler('xandervanderherten@gmail.com', 'logger', 'xander'));
+//$logger->pushHandler(new NativeMailerHandler('xander-v.d.h@hotmail.com', 'logger', 'xander'));
 
 // You can now use your logger
 switch ($type){
     case 'INFO':
         $logger->pushHandler(new StreamHandler(__DIR__.'/log/info.log', Logger::INFO));
         $logger->info($message);
-        $logger->pushHandler(new NativeMailerHandler('xandervanderherten@gmail.com', 'logger', 'xander@hotmail.com', 200, true));
-        $logger->info($message);
+        $console->pushHandler(new BrowserConsoleHandler(Logger::INFO, true));
+        $console->info($message);
         break;
     case 'DEBUG':
         $logger->pushHandler(new StreamHandler(__DIR__.'/log/info.log', Logger::DEBUG));
